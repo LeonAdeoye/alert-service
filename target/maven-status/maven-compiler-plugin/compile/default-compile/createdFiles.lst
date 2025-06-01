@@ -1,0 +1,6 @@
+com\leon\Application.class
+com\leon\models\AlertConfiguration.class
+com\leon\repositories\AlertConfigurationRepository.class
+com\leon\services\AlertConfigurationServiceImpl.class
+com\leon\controllers\AlertConfigurationController.class
+com\leon\services\AlertConfigurationService.class
