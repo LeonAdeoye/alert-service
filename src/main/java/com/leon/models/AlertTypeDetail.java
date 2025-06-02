@@ -1,7 +1,10 @@
 package com.leon.models;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.UUID;
 
+@Document(collection = "AlertTypeDetail")
 public class AlertTypeDetail {
     private UUID id;
     private Classification classification;
