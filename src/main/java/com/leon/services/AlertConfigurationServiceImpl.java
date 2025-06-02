@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,7 @@ public class AlertConfigurationServiceImpl implements AlertConfigurationService
     @Autowired
     private AlertConfigurationRepository alertConfigurationRepository;
 
+    @PostConstruct
     public void initialize()
     {
         List<AlertConfiguration> result = alertConfigurationRepository.findAll();
@@ -58,12 +61,12 @@ public class AlertConfigurationServiceImpl implements AlertConfigurationService
     @Override
     public void deleteAlertConfiguration(String alertConfigurationId)
     {
-        Optional<AlertConfiguration> alertConfigurationOptional = alertConfigurationRepository.findById(alertConfigurationId);
+        Optional<AlertConfiguration> alertConfigurationOptional = alertConfigurationRepository.findById(UUID.fromString(alertConfigurationId));
         if (alertConfigurationOptional.isPresent())
         {
             AlertConfiguration alertConfiguration = alertConfigurationOptional.get();
             String ownerId = alertConfiguration.getOwnerId();
-            alertConfigurationRepository.deleteById(alertConfigurationId);
+            alertConfigurationRepository.deleteById(UUID.fromString(alertConfigurationId));
             List<AlertConfiguration> configurations = alertConfigurationMap.get(ownerId);
             if (configurations != null)
                 configurations.removeIf(config -> config.getId().equals(alertConfigurationId));
