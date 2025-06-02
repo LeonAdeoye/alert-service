@@ -66,7 +66,7 @@ public class AlertConfigurationServiceImpl implements AlertConfigurationService
             alertConfigurationRepository.deleteById(alertConfigurationId);
             List<AlertConfiguration> configurations = alertConfigurationMap.get(ownerId);
             if (configurations != null)
-                configurations.removeIf(config -> config.getAlertConfigurationId().equals(alertConfigurationId));
+                configurations.removeIf(config -> config.getId().equals(alertConfigurationId));
 
             logger.info("Deleted alert configuration with ID: {}", alertConfigurationId);
         }
@@ -77,7 +77,7 @@ public class AlertConfigurationServiceImpl implements AlertConfigurationService
     @Override
     public AlertConfiguration updateAlertConfiguration(AlertConfiguration alertConfiguration)
     {
-        if (alertConfiguration == null || alertConfiguration.getAlertConfigurationId() == null || alertConfiguration.getAlertConfigurationId().toString().isEmpty())
+        if (alertConfiguration == null || alertConfiguration.getId() == null || alertConfiguration.getId().toString().isEmpty())
         {
             logger.error("Attempted to update an alert configuration with null or empty ID.");
             return null;
@@ -90,7 +90,7 @@ public class AlertConfigurationServiceImpl implements AlertConfigurationService
             alertConfigurationMap.put(ownerId, new ArrayList<>());
 
         List<AlertConfiguration> configurations = alertConfigurationMap.get(ownerId);
-        configurations.removeIf(config -> config.getAlertConfigurationId().equals(updatedAlertConfiguration.getAlertConfigurationId()));
+        configurations.removeIf(config -> config.getId().equals(updatedAlertConfiguration.getId()));
         configurations.add(updatedAlertConfiguration);
 
         logger.info("Updated alert configuration: {}", updatedAlertConfiguration);
@@ -100,7 +100,7 @@ public class AlertConfigurationServiceImpl implements AlertConfigurationService
     @Override
     public AlertConfiguration createAlertConfiguration(AlertConfiguration alertConfiguration)
     {
-        if (alertConfiguration == null || alertConfiguration.getAlertConfigurationId() == null || alertConfiguration.getAlertConfigurationId().toString().isEmpty())
+        if (alertConfiguration == null || alertConfiguration.getId() == null || alertConfiguration.getId().toString().isEmpty())
         {
             logger.error("Attempted to create an alert configuration with null or empty ID.");
             return null;

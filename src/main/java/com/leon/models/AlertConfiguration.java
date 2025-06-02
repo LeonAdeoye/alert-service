@@ -2,17 +2,18 @@ package com.leon.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.ArrayList;
 
 
-@Document(collection = "alertConfigurations")
+@Document(collection = "AlertConfiguration")
 public class AlertConfiguration
 {
     @Id
-    private UUID alertConfigurationId;
+    private UUID id;
     private String alertName;
     private String ownerId;
     private Side side;
@@ -25,28 +26,32 @@ public class AlertConfiguration
     private List<String> exchanges;
     private Priority priority;
     private UUID clientId;
+    private String customizations;
 
     public AlertConfiguration() {
-        this.alertConfigurationId = UUID.randomUUID();
+        this.id = UUID.randomUUID();
         this.isActive = false;
+        this.alertName = "";
         this.side = Side.BUY;
         this.alertType = AlertType.ORDER_REJECTIONS;
         this.priority = Priority.LOW;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusHours(6);
         this.frequency = "* * * * * 1-5";
+        this.exchanges = new ArrayList<>();
+        this.customizations = "";
     }
 
-    public UUID getAlertConfigurationId() {
-        return alertConfigurationId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setAlertConfigurationId(UUID alertConfigurationId) {
-        this.alertConfigurationId = alertConfigurationId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getAlertName() {
-        return null;
+        return this.alertName;
     }
 
     public void setAlertName(String alertName) {
@@ -141,10 +146,18 @@ public class AlertConfiguration
         this.clientId = clientId;
     }
 
+    public String getCustomizations() {
+        return customizations;
+    }
+
+    public void setCustomizations(String customizations) {
+        this.customizations = customizations;
+    }
+
     @Override
     public String toString() {
         return "AlertConfiguration{" +
-                "alertConfigurationId=" + alertConfigurationId +
+                "alertConfigurationId=" + id +
                 ", alertName='" + alertName + '\'' +
                 ", ownerId='" + ownerId + '\'' +
                 ", side=" + side +
@@ -157,6 +170,7 @@ public class AlertConfiguration
                 ", exchanges=" + exchanges +
                 ", priority=" + priority +
                 ", clientId=" + clientId +
+                ", customizations='" + customizations + '\'' +
                 '}';
     }
 
@@ -167,12 +181,12 @@ public class AlertConfiguration
 
         AlertConfiguration that = (AlertConfiguration) o;
 
-        return alertConfigurationId != null ? alertConfigurationId.equals(that.alertConfigurationId) : that.alertConfigurationId == null;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return alertConfigurationId != null ? alertConfigurationId.hashCode() : 0;
+        return id != null ? id.hashCode() : 0;
     }
 
 

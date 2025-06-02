@@ -33,7 +33,7 @@ public class AlertConfigurationController
     @RequestMapping(method=GET, produces = "application/json")
     public ResponseEntity<List<AlertConfiguration>> getAll()
     {
-        logger.info("Received request to get all exchanges.");
+        logger.info("Received request to get all alert configurations.");
         return new ResponseEntity<>(this.alertConfigurationService.getAll(), HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class AlertConfigurationController
     @RequestMapping(method=POST , consumes = "application/json"  ,produces = "application/json")
     public ResponseEntity<AlertConfiguration> createAlertConfiguration(@RequestBody AlertConfiguration alertConfiguration)
     {
-        if (alertConfiguration == null || alertConfiguration.getAlertConfigurationId() == null || alertConfiguration.getAlertConfigurationId().toString().isEmpty()) {
+        if (alertConfiguration == null || alertConfiguration.getId() == null || alertConfiguration.getId().toString().isEmpty()) {
             logger.error("Attempted to create an alert configuration with null or empty ID.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -70,7 +70,7 @@ public class AlertConfigurationController
     @RequestMapping(method = PUT, consumes = "application/json"  ,produces = "application/json")
     public ResponseEntity<AlertConfiguration> updateAlertConfiguration(@RequestBody AlertConfiguration alertConfiguration)
     {
-        if (alertConfiguration == null || alertConfiguration.getAlertConfigurationId() == null || alertConfiguration.getAlertConfigurationId().toString().isEmpty())
+        if (alertConfiguration == null || alertConfiguration.getId() == null || alertConfiguration.getId().toString().isEmpty())
         {
             logger.error("Attempted to update an alert configuration with null or empty ID.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
