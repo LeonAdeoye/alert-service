@@ -37,7 +37,7 @@ public class AlertConfiguration
         this.priority = Priority.LOW;
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now().plusHours(6);
-        this.frequency = "* * * * * 1-5";
+        this.frequency = "* * * * 1-5";
         this.exchanges = new ArrayList<>();
         this.customizations = "";
     }
@@ -114,12 +114,12 @@ public class AlertConfiguration
         this.frequency = frequency;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean getIsActive() {
+        return this.isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public List<String> getExchanges() {
@@ -175,22 +175,21 @@ public class AlertConfiguration
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AlertConfiguration)) return false;
-
-        AlertConfiguration that = (AlertConfiguration) o;
-
-        return Objects.equals(id, that.id);
+    public int hashCode() {
+        return Objects.hash(id, alertName, ownerId, side, deskId, alertType, startTime, endTime, frequency, isActive, exchanges, priority, clientId, customizations);
     }
 
     @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AlertConfiguration)) return false;
+        AlertConfiguration that = (AlertConfiguration) o;
+        return isActive == that.isActive && Objects.equals(getId(), that.getId()) && Objects.equals(getAlertName(), that.getAlertName())
+                && Objects.equals(getOwnerId(), that.getOwnerId()) && getSide() == that.getSide() && Objects.equals(getDeskId(), that.getDeskId())
+                && getAlertType() == that.getAlertType() && Objects.equals(getStartTime(), that.getStartTime()) && Objects.equals(getEndTime(), that.getEndTime())
+                && Objects.equals(getFrequency(), that.getFrequency()) && Objects.equals(getExchanges(), that.getExchanges()) && getPriority() == that.getPriority()
+                && Objects.equals(getClientId(), that.getClientId()) && Objects.equals(getCustomizations(), that.getCustomizations());
     }
-
-
-
 }
 
 
